@@ -1,26 +1,41 @@
 package com.DevVoca.backendServer.Controller;
 
 import com.DevVoca.backendServer.Model.VocaList;
+import com.DevVoca.backendServer.Service.VocaListService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RestController
 public class TestController {
+
+    @Autowired
+    VocaListService vocaListService;
     @PostMapping("test1")
-    String aaa(@RequestBody VocaList vocalist)
+    VocaList aaa(@RequestBody VocaList vocalist)
     {
         System.out.println("개발 타입 : " + vocalist.getDev_type());
 
-        return vocalist.getExampleTranslate();
+        ArrayList<String> arr  = new ArrayList<>();
+        arr.add(vocalist.getExample());
+        arr.add(vocalist.getExample());
+        arr.add(vocalist.getExample());
+        arr.add(vocalist.getExampleTranslate());
+        arr.add(vocalist.getHowtoRead());
+
+        return vocaListService.insert(vocalist);
     }
 
     @PostMapping("test2")
-    void aaa2()
+    List<VocaList> aaa2()
     {
-
+        return vocaListService.findNotAddedList(2);
     }
 
 
@@ -30,6 +45,9 @@ public class TestController {
     2. UI(App) 요청 -> Server 에서 DB 조회 -> 요청한 것에 따라 올바른 데이터를 가져옴 -> 반환
     3. 필요 기능
     3.1 단어장 가져오기
+        단어장 가져오기 --> App에서 단어를 요청하면, App에 없는 단어를 가져와서 다운받도록 설정한다.   //완료
+                       이거를 BackEnd에서 판단? 아니면 어떻게? 마지막 단어 번호를 Type으로 전송하고, 서버에서는 마지막 단어와 DB 번호를 대조하여 다운 받을 목록이 있다면 전송하는 걸로 한다?
+
     3.2 학습 완료한 단어 가져오기
       -> 학습하기 화면에서 내가 직접 학습 완료한 단어 목록
     3.3 선호 단어 목록 가져오기
