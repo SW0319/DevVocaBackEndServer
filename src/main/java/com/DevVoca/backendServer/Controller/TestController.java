@@ -6,42 +6,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RestController
+@RequestMapping("/api/test")
 public class TestController {
 
     @Autowired
     VocaListService vocaListService;
-    @PostMapping("test1")
+    @PostMapping("addData")
     VocaList aaa(@RequestBody VocaList vocalist)
     {
         System.out.println("개발 타입 : " + vocalist.getDev_type());
-
-        ArrayList<String> arr  = new ArrayList<>();
-        arr.add(vocalist.getExample());
-        arr.add(vocalist.getExample());
-        arr.add(vocalist.getExample());
-        arr.add(vocalist.getExampleTranslate());
-        arr.add(vocalist.getHowtoRead());
-
         return vocaListService.insert(vocalist);
     }
 
-    @PostMapping("test2")
-    List<VocaList> aaa2()
+    @PostMapping("/getNotDownloadedList")
+    List<VocaList> getNotDownloadedList(@RequestBody int lastNo)
     {
-        return vocaListService.findNotAddedList(2);
+        return vocaListService.findNotAddedList(lastNo);
     }
 
 
     /*
     백엔드 구현 필요 기능
-    1. UI 구현 안하고 POST 요청으로 데이터를 가져온다.
+    1. UI 구현 안하고 POST 요청으로 데이터를 가져온다. (POST : URL에 데이터가 안들어감)
     2. UI(App) 요청 -> Server 에서 DB 조회 -> 요청한 것에 따라 올바른 데이터를 가져옴 -> 반환
     3. 필요 기능
     3.1 단어장 가져오기

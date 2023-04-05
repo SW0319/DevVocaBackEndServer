@@ -8,20 +8,21 @@ import lombok.Getter;
 public class VocaList {
 
     @Id
+    @GeneratedValue
     int v_no;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     String vocaname;
-    @Column(nullable = true)
+    @Column(nullable = false)
 
     String howtoRead; //발음기호
-    @Column(nullable = true)
+    @Column(nullable = false)
     String translate;
-    @Column(nullable = true)
+    @Column(nullable = false)
     String example;
-    @Column(nullable = true)
+    @Column(nullable = false)
     String exampleTranslate;
-    @Column(nullable = true)
+    @Column(nullable = false)
     int dev_type;
 
 

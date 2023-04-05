@@ -9,6 +9,6 @@ import java.util.List;
 public interface VocaListRepository extends CrudRepository<VocaList,Integer> {
 
 
-    @Query(value = "SELECT * FROM VOCA_LIST where v_no >= :lastNo", nativeQuery = true)
+    @Query(value = "SELECT * FROM VOCA_LIST where v_no > :lastNo", nativeQuery = true)
     List<VocaList> findNotAddVocaList(int lastNo);
 }
