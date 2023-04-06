@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
+@Table(name = "Voca_List")
 public class VocaList {
 
     @Id
