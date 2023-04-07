@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")    //TODO api/auth로 넣어야함
 public class LoginController {
 
     @Autowired
