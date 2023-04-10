@@ -26,20 +26,26 @@ public class LoginService
                 .setAudience(Collections.singletonList("26426668169-qa1kmh47s0bs9f1l8aoi14lktdqhrd8m.apps.googleusercontent.com"))
                 .build();
 
-        public String authIdToken(LoginToken loginToken)
+        public LoginToken authIdToken(LoginToken loginToken)
         {
                 System.out.println("토큰 : " + loginToken.getToken());
                 System.out.println("email : " + loginToken.getEmail());
                 System.out.println("name : " + loginToken.getName());
                 System.out.println("authByToken execute");
-                String result = "fail";
+                LoginToken result = null;
                 try{
-                        System.out.println("try execute");
                 GoogleIdToken token = verifier.verify(loginToken.getToken());
                 if(token != null)       //token 인증에 성공할 경우(계정 정보가 올바른 사용자임을 확인함)
                 {
-                        GoogleIdToken.Payload payload = token.getPayload();
-                        result = loginByToken(payload);
+                        GoogleIdToken.Payload payload = token.getPayload();     //결과 데이터
+                        if(loginToken.getEmail().equals(payload.getEmail()) && loginToken.getName().equals(payload.get("name")))        //추가 인증(email, 이름 동일한지 확인함)
+                        {
+                                result = loginByToken(payload, loginToken.getToken());
+                        }
+                        else
+                        {
+                                System.out.println("인증 실패");
+                        }
                 }
                 }catch (Exception e)
                 {
@@ -49,26 +55,29 @@ public class LoginService
                 return result;
         }
 
-        public String loginByToken(GoogleIdToken.Payload payload)      //Token을 사용하여 로그인
+        public LoginToken loginByToken(GoogleIdToken.Payload payload, String token)      //Token을 사용하여 로그인
         {
                 System.out.println("loginByToken execute");
                 int findUser = userInfoRepository.findByuserID(payload.getSubject());
-                String result = "fail";
 
+                LoginToken resultToken = new LoginToken();
+                resultToken.setToken(token);
+                resultToken.setEmail(payload.getEmail());
+                resultToken.setName(payload.get("name").toString());
                 if(findUser==0)    //Token을 활용해서 찾았는데 ID가 없을 경우 -> 자동으로 회원가입 하도록 설정
                 {
                         userInfoRepository.save(new UserInfo(payload.getSubject(),payload.getEmail(), payload.get("name").toString()));
-                        result = payload.getEmail();
+                        resultToken.setMessage("save");
                 }
                 else if(findUser==1)
                 {
-                        System.out.println("이미 있음!");
+                        resultToken.setMessage("exists");
                 }
                 else if(findUser>1)
                 {
-                        System.out.println("발생 X");
+                        resultToken.setMessage("Error");
                 }
-                return result;
+                return resultToken;
         }
 
 }

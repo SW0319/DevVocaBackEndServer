@@ -18,7 +18,7 @@ public class LoginController {
     @Autowired
     LoginService loginService;
     @PostMapping("/google")
-    String googleAuth(@RequestBody LoginToken loginToken)
+    LoginToken googleAuth(@RequestBody LoginToken loginToken)
     {
         return loginService.authIdToken(loginToken);
     }
