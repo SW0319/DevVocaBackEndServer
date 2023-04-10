@@ -1,6 +1,7 @@
 package com.DevVoca.backendServer.Controller;
 
 
+import com.DevVoca.backendServer.Model.LoginToken;
 import com.DevVoca.backendServer.Service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,9 @@ public class LoginController {
     @Autowired
     LoginService loginService;
     @PostMapping("/google")
-    String googleAuth(@RequestBody String idTokenString)
+    String googleAuth(@RequestBody LoginToken loginToken)
     {
-        return loginService.authIdToken(idTokenString);
+        return loginService.authIdToken(loginToken);
     }
 
 }
