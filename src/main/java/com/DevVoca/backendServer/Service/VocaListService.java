@@ -19,9 +19,11 @@ public class VocaListService {
     }
     public List<VocaList> findNotAddedList(int lastAddNo)
     {
-        return vocaListRepository.findNotAddVocaList(lastAddNo);
-    }
+        if(lastAddNo == -1)
+            return vocaListRepository.getAllVocaLists();
 
+        return vocaListRepository.getNotAddedVocaLists(lastAddNo);
+    }
 
 
 }

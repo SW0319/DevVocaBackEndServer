@@ -10,6 +10,9 @@ public interface VocaListRepository extends CrudRepository<VocaList,Integer> {
 
 
     @Query(value = "SELECT * FROM voca_list where v_no > :lastNo", nativeQuery = true)
-    List<VocaList> findNotAddVocaList(int lastNo);
+    List<VocaList> getNotAddedVocaLists(int lastNo);
+
+    @Query(value = "SELECT * FROM voca_list", nativeQuery = true)
+    List<VocaList> getAllVocaLists();
 
 }
