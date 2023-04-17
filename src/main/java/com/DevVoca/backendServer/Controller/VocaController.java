@@ -1,8 +1,11 @@
 package com.DevVoca.backendServer.Controller;
 
 
+import com.DevVoca.backendServer.Model.FavoriteVocaGroup;
 import com.DevVoca.backendServer.Model.LoginToken;
+import com.DevVoca.backendServer.Model.UserInfo;
 import com.DevVoca.backendServer.Model.VocaList;
+import com.DevVoca.backendServer.Service.FavoriteVocaGroupService;
 import com.DevVoca.backendServer.Service.VocaListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,8 @@ public class VocaController {
 
     @Autowired
     VocaListService vocaListService;
+    @Autowired
+    FavoriteVocaGroupService favoriteVocaGroupService;
 
     @PostMapping("/downloadAllLists")
     List<VocaList> downloadAllLists()
@@ -32,4 +37,24 @@ public class VocaController {
     {
         return vocaListService.findNotAddedList(vocaList.getV_no());
     }
+
+    @PostMapping("/getFVocaGroup")
+    List<FavoriteVocaGroup> getFavoriteVocaGroup(UserInfo userInfo)
+    {
+        return favoriteVocaGroupService.getFavoriteVocaGroup(userInfo);
+    }
+
+    @PostMapping("/addFVocaGroup")
+    FavoriteVocaGroup addFavoriteVocaGroup(@RequestBody FavoriteVocaGroup favoriteVocaGroup)
+    {
+        return favoriteVocaGroupService.addFavoriteVocaGroup(favoriteVocaGroup);
+    }
+
+    @PostMapping("/removeVocaGroup")
+    void removeVocaGroup(@RequestBody FavoriteVocaGroup favoriteVocaGroup)
+    {
+        favoriteVocaGroupService.removeFavoriteVocaGroup(favoriteVocaGroup);
+    }
+
+
 }
