@@ -80,4 +80,9 @@ public class LoginService
                 return resultToken;
         }
 
+        public String testLogin(UserInfo userInfo)
+        {
+                return userInfoRepository.save(userInfo).getUserName();
+        }
+
 }

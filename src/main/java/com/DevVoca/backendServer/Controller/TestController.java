@@ -1,6 +1,8 @@
 package com.DevVoca.backendServer.Controller;
 
+import com.DevVoca.backendServer.Model.UserInfo;
 import com.DevVoca.backendServer.Model.VocaList;
+import com.DevVoca.backendServer.Service.LoginService;
 import com.DevVoca.backendServer.Service.VocaListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,8 @@ public class TestController {
 
     @Autowired
     VocaListService vocaListService;
+    @Autowired
+    LoginService loginService;
     @PostMapping("addData")
     VocaList aaa(@RequestBody VocaList vocalist)
     {
@@ -33,6 +37,13 @@ public class TestController {
         return vocaListService.findNotAddedList(lastNo);
     }
 
+
+    //TODO 테스트임으로 제거해야함
+    @PostMapping("/testLogin")
+    String testLogin(@RequestBody UserInfo userInfo)
+    {
+        return loginService.testLogin(userInfo);
+    }
 
     /*
     백엔드 구현 필요 기능
