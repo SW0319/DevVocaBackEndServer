@@ -14,7 +14,7 @@ public class FavoriteVocaGroupService {
     @Autowired
     FavoriteVocaGroupRepository favoriteVocaGroupRepository;
 
-    //TODO : favoriteVocaGroup 내부의 UserInfo가 유효한 정보인지 확인하도록 구현해야함
+    //TODO : favoriteVocaGroup 내부의 UserInfo가 유효한 정보인지 확인하도록 구현해야함??
     public FavoriteVocaGroup addFavoriteVocaGroup(FavoriteVocaGroup favoriteVocaGroup)
     {
         return favoriteVocaGroupRepository.save(favoriteVocaGroup);

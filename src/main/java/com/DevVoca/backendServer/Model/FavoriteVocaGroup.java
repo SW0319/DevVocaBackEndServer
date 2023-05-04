@@ -23,4 +23,6 @@ public class FavoriteVocaGroup {
     @Column(name = "favoriteGroupName", nullable = false)
     String favoriteGroupName;
 
+    String favoriteVocaListArray = "";
+
 }

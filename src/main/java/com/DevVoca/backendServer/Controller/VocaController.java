@@ -1,10 +1,7 @@
 package com.DevVoca.backendServer.Controller;
 
 
-import com.DevVoca.backendServer.Model.FavoriteVocaGroup;
-import com.DevVoca.backendServer.Model.LoginToken;
-import com.DevVoca.backendServer.Model.UserInfo;
-import com.DevVoca.backendServer.Model.VocaList;
+import com.DevVoca.backendServer.Model.*;
 import com.DevVoca.backendServer.Service.FavoriteVocaGroupService;
 import com.DevVoca.backendServer.Service.VocaListService;
 import org.springframework.beans.factory.annotation.Autowired;
