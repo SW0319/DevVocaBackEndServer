@@ -22,7 +22,7 @@ public class FavoriteVocaGroupService {
 
     public List<FavoriteVocaGroup> getFavoriteVocaGroup(UserInfo userInfo)
     {
-        return favoriteVocaGroupRepository.getMyFavoriteVocaGroup(userInfo);
+        return favoriteVocaGroupRepository.findByUserInfo_UserNo(userInfo.getUserNo());
     }
 
     public void removeFavoriteVocaGroup(FavoriteVocaGroup favoriteVocaGroup)

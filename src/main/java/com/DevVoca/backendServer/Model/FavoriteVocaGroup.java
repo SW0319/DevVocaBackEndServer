@@ -1,5 +1,6 @@
 package com.DevVoca.backendServer.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.websocket.server.ServerEndpoint;
 import lombok.Getter;
@@ -15,8 +16,8 @@ public class FavoriteVocaGroup {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int group_No;
 
-    @JoinColumn(name = "user_No", nullable = false)
-    @ManyToOne
+    @JoinColumn(name = "userInfo") //foreign key
+    @ManyToOne  //FavoriteVocaGroup 은 많고, userinfo는 하나.
     private UserInfo userInfo;
 
 

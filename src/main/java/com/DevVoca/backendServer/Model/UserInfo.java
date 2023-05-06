@@ -13,14 +13,15 @@ public class UserInfo {
 
     @Id
     @GeneratedValue
-    int user_No;
+    int userNo;
     String userID; //고유한 값임
     String email;
     String userName;
 
     public UserInfo(){}
 
-    public UserInfo(String userID, String email, String userName){
+    public UserInfo(int userNo, String userID, String email, String userName){
+        this.userNo = userNo;
         this.userID = userID;
         this.email = email;
         this.userName = userName;

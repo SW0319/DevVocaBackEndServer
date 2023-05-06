@@ -36,7 +36,7 @@ public class VocaController {
     }
 
     @PostMapping("/getFVocaGroup")
-    List<FavoriteVocaGroup> getFavoriteVocaGroup(UserInfo userInfo)
+    List<FavoriteVocaGroup> getFavoriteVocaGroup(@RequestBody UserInfo userInfo)
     {
         return favoriteVocaGroupService.getFavoriteVocaGroup(userInfo);
     }
