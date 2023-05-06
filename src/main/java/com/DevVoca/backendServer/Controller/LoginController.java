@@ -24,4 +24,10 @@ public class LoginController {
         return loginService.authUserInfo(loginToken);
     }
 
+    @PostMapping("/google/login")
+    UserInfo googleLogin(@RequestBody String userID) throws Exception
+    {
+        return loginService.loginByLoginID(userID);
+    }
+
 }

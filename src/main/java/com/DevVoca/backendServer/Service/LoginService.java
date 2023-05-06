@@ -60,6 +60,12 @@ public class LoginService
                 return findUser;
         }
 
+        public UserInfo loginByLoginID(String loginID)
+        {
+                return userInfoRepository.findByuserID(loginID);
+        }
+
+
         public String testLogin(UserInfo userInfo)
         {
                 return userInfoRepository.save(userInfo).getUserName();
