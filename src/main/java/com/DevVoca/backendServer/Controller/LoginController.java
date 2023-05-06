@@ -18,7 +18,7 @@ public class LoginController {
     @Autowired
     LoginService loginService;
     @PostMapping("/google")
-    LoginToken googleAuth(@RequestBody LoginToken loginToken)
+    LoginToken googleAuth(@RequestBody LoginToken loginToken) throws Exception  //이러면 예외처리는 누가 하게 되는건가?
     {
         return loginService.authIdToken(loginToken);
     }
