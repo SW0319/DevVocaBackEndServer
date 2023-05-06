@@ -8,7 +8,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.JsonToken;
 import com.google.api.client.json.gson.GsonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +25,13 @@ public class LoginService
                 .setAudience(Collections.singletonList("26426668169-qa1kmh47s0bs9f1l8aoi14lktdqhrd8m.apps.googleusercontent.com"))
                 .build();
 
-        public LoginToken authIdToken(LoginToken loginToken) throws Exception
+        public UserInfo authUserInfo(LoginToken loginToken) throws Exception
         {
                 System.out.println("토큰 : " + loginToken.getToken());
                 System.out.println("email : " + loginToken.getEmail());
                 System.out.println("name : " + loginToken.getName());
                 System.out.println("authByToken execute");
-                LoginToken result = null;
+                UserInfo result = null;
                 GoogleIdToken token = verifier.verify(loginToken.getToken());
                 if(token != null)       //token 인증에 성공할 경우(계정 정보가 올바른 사용자임을 확인함)
                 {
@@ -49,29 +48,16 @@ public class LoginService
                 return result;
         }
 
-        public LoginToken loginByToken(GoogleIdToken.Payload payload, String token)      //Token을 사용하여 로그인
+        public UserInfo loginByToken(GoogleIdToken.Payload payload, String token)      //Token을 사용하여 로그인
         {
                 System.out.println("loginByToken execute");
-                int findUser = userInfoRepository.findByuserID(payload.getSubject());
+                UserInfo findUser = userInfoRepository.findByuserID(payload.getSubject());
 
-                LoginToken resultToken = new LoginToken();
-                resultToken.setToken(token);
-                resultToken.setEmail(payload.getEmail());
-                resultToken.setName(payload.get("name").toString());
-                if(findUser==0)    //Token을 활용해서 찾았는데 ID가 없을 경우 -> 자동으로 회원가입 하도록 설정
+                if(findUser==null)    //Token을 활용해서 찾았는데 ID가 없을 경우 -> 자동으로 회원가입 하도록 설정
                 {
-                        userInfoRepository.save(new UserInfo(0,payload.getSubject(),payload.getEmail(), payload.get("name").toString()));
-                        resultToken.setMessage("save");
+                        findUser = userInfoRepository.save(new UserInfo(0,payload.getSubject(),payload.getEmail(), payload.get("name").toString()));
                 }
-                else if(findUser==1)
-                {
-                        resultToken.setMessage("exists");
-                }
-                else if(findUser>1)
-                {
-                        resultToken.setMessage("Error");
-                }
-                return resultToken;
+                return findUser;
         }
 
         public String testLogin(UserInfo userInfo)

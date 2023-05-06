@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserInfoRepository extends CrudRepository<UserInfo,Integer> {
 
-    @Query(value = "select count(*) from user_info where userID = :parameter_UserID", nativeQuery = true)
-    int findByuserID(String parameter_UserID);
+    @Query(value = "select * from user_info where userID = :parameter_UserID", nativeQuery = true)
+    UserInfo findByuserID(String parameter_UserID);
 
 }

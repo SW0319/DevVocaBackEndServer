@@ -2,6 +2,7 @@ package com.DevVoca.backendServer.Controller;
 
 
 import com.DevVoca.backendServer.Model.LoginToken;
+import com.DevVoca.backendServer.Model.UserInfo;
 import com.DevVoca.backendServer.Service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,9 @@ public class LoginController {
     @Autowired
     LoginService loginService;
     @PostMapping("/google")
-    LoginToken googleAuth(@RequestBody LoginToken loginToken) throws Exception  //이러면 예외처리는 누가 하게 되는건가?
+    UserInfo googleAuth(@RequestBody LoginToken loginToken) throws Exception  //이러면 예외처리는 누가 하게 되는건가?
     {
-        return loginService.authIdToken(loginToken);
+        return loginService.authUserInfo(loginToken);
     }
 
 }
