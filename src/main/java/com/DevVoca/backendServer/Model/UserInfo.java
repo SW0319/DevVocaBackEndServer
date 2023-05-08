@@ -1,13 +1,25 @@
 package com.DevVoca.backendServer.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "User_Info")
 public class UserInfo {
 
@@ -18,14 +30,17 @@ public class UserInfo {
     String email;
     String userName;
 
-    public UserInfo(){}
 
-    public UserInfo(int userNo, String userID, String email, String userName){
-        this.userNo = userNo;
-        this.userID = userID;
-        this.email = email;
-        this.userName = userName;
+    @CreationTimestamp
+    LocalDateTime registerDate;
+
+    @UpdateTimestamp
+    LocalDateTime lastLoginDate;
+    int loginStreak = 1;
+
+    public  UserInfo()
+    {
+
     }
-
 
 }
