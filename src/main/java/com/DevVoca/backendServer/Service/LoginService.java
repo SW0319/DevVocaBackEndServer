@@ -12,7 +12,13 @@ import com.google.api.client.json.gson.GsonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class LoginService
@@ -55,7 +61,7 @@ public class LoginService
 
                 if(findUser==null)    //Token을 활용해서 찾았는데 ID가 없을 경우 -> 자동으로 회원가입 하도록 설정
                 {
-                        findUser = userInfoRepository.save(new UserInfo(0,payload.getSubject(),payload.getEmail(), payload.get("name").toString()));
+//                        findUser = userInfoRepository.save(new UserInfo(0,payload.getSubject(),payload.getEmail(), payload.get("name").toString(),null,null,1));
                 }
                 return findUser;
         }
@@ -65,10 +71,60 @@ public class LoginService
                 return userInfoRepository.findByuserID(loginID);
         }
 
+        public UserInfo updateContinuous(UserInfo userinfo)     //연속 출석인지 검사
+        {
+                LocalDateTime lastLogin = userinfo.getLastLoginDate();
+                LocalDateTime today = getTodayStartTime();
+
+                long diffDays = Duration.between(lastLogin,today).toDays();
+                if(diffDays==1) //연속 출석
+                {
+
+                }
+                else if(diffDays > 1)   //연속 출석 실패
+                {
+
+                }
+                else    //그외 예외상황
+                {
+
+                }
+                /*
+                * 1. UserInfo의 lastLogin 가져옴
+                * 2. 오늘 날짜와 비교
+                * 3. 오늘날짜와 하루차이라면? -> 연속 출석
+                * 4. 하루 차이가 아니라면? -> 연속 출석이 아니게 됨
+                * 5. 판단을 가지고 DB에 업데이트 후 반환
+                * */
+                //같은 날짜일 경우 Query 미실행은 app에서 판단, streak가 변경되야 할 경우 요청이 들어옴
+                return userinfo;
+        }
 
         public String testLogin(UserInfo userInfo)
         {
-                return userInfoRepository.save(userInfo).getUserName();
+                UserInfo info = userInfoRepository.save(userInfo);
+                LocalDateTime v1 = info.getLastLoginDate().toLocalDate().atStartOfDay();
+                System.out.println("날짜 차이 : " + Duration.between(LocalDate.of(2023,5,5).atStartOfDay(),v1).toDays());
+                ;
+                return info.getUserName();
+        }
+
+        private LocalDateTime getTodayStartTime()
+        {
+                LocalDateTime dateTime = LocalDateTime.now();
+                dateTime = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth(),0,0);
+                System.out.println(dateTime);
+                return dateTime;
+        }
+
+        public UserInfo findById(int userNo)
+        {
+                Optional<UserInfo> userInfo = userInfoRepository.findById(userNo);
+                if(userInfo.isPresent())
+                {
+                        return userInfo.get();
+                }
+                else return null;
         }
 
 }
