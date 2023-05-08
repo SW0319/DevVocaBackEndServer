@@ -9,6 +9,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +62,11 @@ public class LoginService
 
                 if(findUser==null)    //Token을 활용해서 찾았는데 ID가 없을 경우 -> 자동으로 회원가입 하도록 설정
                 {
-//                        findUser = userInfoRepository.save(new UserInfo(0,payload.getSubject(),payload.getEmail(), payload.get("name").toString(),null,null,1));
+                        UserInfo userInfo = new UserInfo();
+                        userInfo.setUserID(payload.getSubject());
+                        userInfo.setEmail(payload.getEmail());
+                        userInfo.setUserName(payload.get("name").toString());
+                        findUser = userInfoRepository.save(userInfo);
                 }
                 return findUser;
         }
