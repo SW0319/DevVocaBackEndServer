@@ -79,6 +79,10 @@ public class VocaController {
     {
         return completeVocaService.getCompleteVocaListByUserInfo(userInfo);
     }
-
+    @PostMapping("/updateFavoriteVocaLists")
+    FavoriteVocaGroup updateFavoriteVocaLists(@RequestBody FavoriteVocaGroup favoriteVocaGroup)
+    {
+        return favoriteVocaGroupService.updateFavoriteVocaGroup(favoriteVocaGroup);
+    }
 
 }
