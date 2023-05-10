@@ -39,5 +39,8 @@ public class VocaListService {
         }
     }
 
-
+    public List<VocaList> getTodayVocas()
+    {
+        return vocaListRepository.getTodaysVoca();
+    }
 }

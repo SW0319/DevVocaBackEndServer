@@ -15,4 +15,6 @@ public interface VocaListRepository extends CrudRepository<VocaList,Integer> {
     @Query(value = "SELECT * FROM voca_list", nativeQuery = true)
     List<VocaList> getAllVocaLists();
 
+    @Query(value = "SELECT * FROM voca_list order by rand() limit 10", nativeQuery = true)
+    List<VocaList> getTodaysVoca();
 }

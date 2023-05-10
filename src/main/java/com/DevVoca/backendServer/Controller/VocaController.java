@@ -85,4 +85,10 @@ public class VocaController {
         return favoriteVocaGroupService.updateFavoriteVocaGroup(favoriteVocaGroup);
     }
 
+    @PostMapping("/todayVocas")
+    List<VocaList> getTodayVocaLists()
+    {
+        return vocaListService.getTodayVocas();
+    }
+
 }
